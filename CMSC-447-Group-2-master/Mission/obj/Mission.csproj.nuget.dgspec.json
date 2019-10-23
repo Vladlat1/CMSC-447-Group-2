@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\orang\\source\\repos\\Mission\\Mission.csproj": {}
+    "C:\\Users\\orang\\Downloads\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-master\\Mission\\Mission.csproj": {}
   },
   "projects": {
-    "C:\\Users\\orang\\source\\repos\\Mission\\Mission.csproj": {
+    "C:\\Users\\orang\\Downloads\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-master\\Mission\\Mission.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\orang\\source\\repos\\Mission\\Mission.csproj",
+        "projectUniqueName": "C:\\Users\\orang\\Downloads\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-master\\Mission\\Mission.csproj",
         "projectName": "Mission",
-        "projectPath": "C:\\Users\\orang\\source\\repos\\Mission\\Mission.csproj",
+        "projectPath": "C:\\Users\\orang\\Downloads\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-master\\Mission\\Mission.csproj",
         "packagesPath": "C:\\Users\\orang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\orang\\source\\repos\\Mission\\obj\\",
+        "outputPath": "C:\\Users\\orang\\Downloads\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-demo-1\\CMSC-447-Group-2-master\\Mission\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\orang\\AppData\\Roaming\\NuGet\\NuGet.Config",

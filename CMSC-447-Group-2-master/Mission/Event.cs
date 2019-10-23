@@ -5,7 +5,7 @@ using System.Text;
 namespace ResponseParser
 {
 
-    class Event
+    public class Event
     {
         private readonly int ID;
         private readonly string Name;
@@ -24,35 +24,35 @@ namespace ResponseParser
             Date = _Date;
         }
 
-        int GetID()
+       public int GetID()
         {
             return ID;
         }
 
-        string GetName()
+        public string GetName()
         {
             return Name;
         }
 
-        string GetLocation()
+        public string GetLocation()
         {
             return Location;
         }
 
-        int[] GetCategories()
+        public int[] GetCategories()
         {
             return Categories;
         }
 
-        string GetDescription()
+        public string GetDescription()
         {
             return Description;
         }
-        string GetDate()
+        public string GetDate()
         {
             return Date;
         }
-        void AddCategory(int _Category)
+        public void AddCategory(int _Category)
         {
             if (Categories[_Category] == 0)
             {
@@ -60,7 +60,7 @@ namespace ResponseParser
             }
         }
 
-        void RemoveCategory(int _Category)
+        public void RemoveCategory(int _Category)
         {
             if (Categories[_Category] == 1)
             {

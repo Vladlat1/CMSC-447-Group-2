@@ -11,7 +11,7 @@ namespace ResponseParser
         public List<Event> Events = new List<Event>();
         int nextID;
 
-        void ParseCSV(string _path)
+        public void ParseCSV(string _path)
         {
             path = _path;
             using (StreamReader sr = File.OpenText(path))

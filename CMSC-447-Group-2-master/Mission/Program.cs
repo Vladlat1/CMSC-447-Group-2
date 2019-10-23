@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ResponseParser;
 
 namespace SQLiteDemo
 {
@@ -15,14 +16,14 @@ namespace SQLiteDemo
             SQLiteConnection sqlite_conn;
             sqlite_conn = CreateConnection();
             Console.WriteLine("Testing");
-            //CreateTable(sqlite_conn);
-            ResponseParser parser;
+
+            CSVParser parser = new CSVParser();
             parser.ParseCSV("Call Center Form.csv");
             foreach (var ev in parser.Events) {
-                string sqlite_id_cmd = $"INSERT INTO Case(CaseID) VALUES({ev.GetID()});";
+                string sqlite_id_cmd = $"INSERT INTO Cases VALUES({ev.GetID()},0,0,0,0);";
                 int[] tags = ev.GetCategories();
                 string sqlite_tags_cmd = $"INSERT INTO Tags VALUES({tags[0]},{tags[1]},{tags[3]},{tags[4]},{tags[5]},{ev.GetID()});";
-                string sqlite_desc_cmd = $"INSERT INTO Description VALUES({ev.GetID()},{ev.GetName},{ev.GetDescription});";
+                string sqlite_desc_cmd = $"INSERT INTO Description VALUES({ev.GetID()},{ev.GetName()},{ev.GetDescription()});";
 
                 
                 InsertData(sqlite_conn, sqlite_id_cmd);
