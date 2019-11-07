@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Response Dashboard Login</title>
+		<style>
+		h1 { text-align: center; }
+		</style>
+	</head>
+	<body>
+		<h1>
+		<span id="header"></span>
+		<div>
+			<label id = "usernameLabel" for="usernameInput">Full Name:</label>
+			<input id="usernameInput" type="text" size="20" maxlength="20" name="user_name" value="">
+			<label id = "passwordLabel" for="passwordInput">Password:</label>
+			<input id="passwordInput" type="password" size="20" maxlength="20" name="password_field" value="">
+		</div>
+		<button id = "loginButton" onclick="login()">Login</button>
+		<button id = "newAccountButton" onclick="newAcc()">Create Account</button>
+		<div>
+		<label id = "loginErrorLabel" style="color: red"></label>
+		</div>
+	</body>
+</html>
+
+</script><script type="text/javascript">
+const header = document.getElementById('header');
+header.textContent = "Login to the disaster relief board.";
+
+const usernameInput = document.getElementById ('usernameInput');
+const passwordInput = document.getElementById('passwordInput');
+const loginErrorLabel = document.getElementById('loginErrorLabel');
+//const outputName = document.getElementById ('outputName');
+
+/*const f_update = (() => 
+{ 
+	outputName.textContent = usernameInput.value + " " + passwordInput.value; 
+});
+
+usernameInput.addEventListener('input', f_update, false);
+passwordInput.addEventListener('input', f_update, false);*/
+
+
+function login() {
+	const name1 = usernameInput.value;
+	const pass1 = passwordInput.value;
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+			response = xmlhttp.responseText;
+			if(response.length > 0) {
+				loginErrorLabel.textContent = response;
+				var xml = new XMLHttpRequest();
+				xml.open("POST", "/loginNormal", true);
+				xml.setRequestHeader("Content-Type", "application/json");
+				xml.send();
+			}
+		}
+	}
+	xmlhttp.open("POST", "/login", true);
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send(JSON.stringify({name:name1, pass:pass1}));	
+}
+
+function newAcc() {
+	const name1 = usernameInput.value;
+	const pass1 = passwordInput.value;
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "/newAccount", true);
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send(JSON.stringify({name:name1, pass:pass1}));	
+}
+</script>
