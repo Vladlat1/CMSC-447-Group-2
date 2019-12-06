@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+<div id = "toolbar">
+        <label>Navigate:</label>
+        <a href="/login" id = "hypelink">Login</a>
+		
+	</div>
+	
+<div id="left">
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+		<p>
+			{{ form.location.label }}
+            <input id = "login_field" type="text" name="location" placeholder="Enter coordinates">
+			<br>
+		</p>
+		<p>
+			{{ form.time.label }} 
+            <input id = "login_field" type="text" name="time" placeholder="Enter time (HH:MM)">
+			<br>
+		</p>
+		<p>
+			<label>Type</label>
+		</p>
+        <p>
+		<input id = "check_box" type="checkbox" name="animal">
+            {{ form.animal.label }}<br>
+        </p>
+        <p>
+		<input id = "check_box" type="checkbox" name="fire">
+            {{ form.fire.label }}<br>
+        </p>
+		<p>
+		<input id = "check_box" type="checkbox" name="flood">
+            {{ form.flood.label }}<br>
+        </p>
+		<p>
+		<input id = "check_box" type="checkbox" name="medical">
+            {{ form.medical.label }}<br>
+        </p>
+		<p>
+		<input id = "check_box" type="checkbox" name="electrical">
+            {{ form.electrical.label }}<br>
+        </p>
+		<p>
+            {{ form.other.label }}
+            <input id = "login_field" type="text" name="other" placeholder="Other types">
+			<br>
+        </p>
+        <p>
+		<input id = "buttons" type="submit" name="update" value="Update">
+		<input id = "buttons" type="submit" name="new_event" value="New Event">
+		</p>
+    </form>
+</div>
+<div id="map" style="height: 50%;"></div>
+<script type="text/javascript">
+	var others = {{ others|tojson }};
+	var locations = {{ locations|tojson }};
+  // The first parameter are the coordinates of the center of the map
+  // The second parameter is the zoom level
+	var map = L.map('map').setView([39.25359, -76.71279], 18);
+	for (i = 0; i < locations.length; i+=8) {
+		console.log("[" + locations[i] + locations[i+1] + "]");
+		L.marker([locations[i], locations[i+1]]).addTo(map)
+		.bindPopup("[" + locations[i] + ", " + locations[i+1] + "]").on('click', setVals);
+	}
+	
+	function setVals(e) {
+		for (i = 0; i < locations.length; i+=8) {
+			if(locations[i] == e.latlng.lat && locations[i+1] == e.latlng.lng) {
+				document.getElementsByName("location")[0].value = "" + e.latlng.lat + "," + e.latlng.lng;
+				document.getElementsByName("time")[0].value = locations[i+7]
+				document.getElementsByName("animal")[0].checked = locations[i+2] == 1 ? true : false;
+				document.getElementsByName("fire")[0].checked = locations[i+3] == 1 ? true : false;
+				document.getElementsByName("flood")[0].checked = locations[i+4] == 1 ? true : false;
+				document.getElementsByName("medical")[0].checked = locations[i+5] == 1 ? true : false;
+				document.getElementsByName("electrical")[0].checked = locations[i+6] == 1 ? true : false;
+				document.getElementsByName("other")[0].value = others[i/8];
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open("POST", "/events", true);
+				xmlhttp.setRequestHeader("Content-Type", "application/json");
+				xmlhttp.send(JSON.stringify({index:i}));
+				break;
+			}
+		}
+	}
+  // {s}, {z}, {x} and {y} are placeholders for map tiles
+  // {x} and {y} are the x/y of where you are on the map
+  // {z} is the zoom level
+  // {s} is the subdomain of cartodb
+    var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  });
+  
+  var popup = L.popup();
+
+	function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
+	}
+
+	map.on('click', onMapClick);
+  
+  // Now add the layer onto the map
+  
+  map.addLayer(layer);
+  
+  console.log({{managerbool|tojson}});
+	if({{managerbool|tojson}}["manager"]) {
+	var element = document.getElementById("toolbar");
+	var newElement = '<a href="/manager" id = "hypelink">Manager</a>';
+	element.insertAdjacentHTML('beforeend', newElement );
+	}
+  
+</script>
+{% endblock %}

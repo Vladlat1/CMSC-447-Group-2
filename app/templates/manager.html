@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id = 'mission'>
+	<div>
+        <label>Navigate:</label>
+        <a href="/login" id = "hypelink">Login</a>
+	</div>
+
+	<div>
+	<p>
+	<form action="" method="post" novalidate>
+		<input id = "buttons" onclick = "setLabelsToEvents()" type="button" name="entry" value="Entries">
+		<input id = "buttons" onclick = "setLabelsToMissions()" type="button" name="missions" value="Missions">
+		<input id = "buttons" onclick = "setLabelsToEquipment()" type="button" name="equipment" value="Equipment">
+		<input id = "buttons" onclick = "setLabelsToPersonnel()" type="button" name="personnel" value="Personnel">
+	</form>
+	</p>
+	</div>
+	
+<input id = "buttons" type = "button" name = "type_display" align = "center" onclick='viewMap()' value='View Map'>
+<table name = "table" align = 'center'>
+    <tr>
+        <th>Case ID</th>
+        <th>Location X</th>
+		<th>Location Y</th>
+		<th>Time</th>
+		<th>Mission ID</th>
+		<th>Tags</th>
+    </tr>
+    {% for desc in cases %}
+	{% set loop1 = loop.index %}
+		<tr>
+			{% for val in desc %}
+				<td>
+					<input name={{loop1 * desc|length - desc|length - 1 + loop.index}} type="text" onchange="updateCase({{loop1 * desc|length - desc|length - 1 + loop.index}})" value={{val}}>
+				</td>
+			{% endfor %}
+			<td><input type = "button" onclick = "viewTags({{loop1}})" value = "View Tags"></td>
+		</tr>
+	{% endfor %}
+</table>
+</div>
+
+<script type="text/javascript">
+function viewTags(index) {
+	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/viewTags", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({index:index}));
+	
+	window.location.replace("/tag");
+}
+function viewMap() {
+    window.location.replace("/events");
+}
+function viewEquipmentForMission(i) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/viewEquipment", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({index:i}));
+	
+	window.location.replace("/equipments");
+}
+function updateCase(i) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/updateCase", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    val = document.getElementsByName(i)[0].value;
+    xmlhttp.send(JSON.stringify({row:((i/5) | 0), index:i%5, value:val}));
+}
+function updateMission(row, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/updateMissions", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    var element = document.getElementsByName(index)[0];
+    xmlhttp.send(JSON.stringify({row:row,index:index,value:element.value}));
+    //window.location.replace("/equipments");
+}
+function updateEquipment(row, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/updateEquipment", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    var element = document.getElementsByName(index)[0];
+    xmlhttp.send(JSON.stringify({row:row,index:(index%3),value:element.value}));
+    //window.location.replace("/equipments");
+}
+function setLabelsToEvents() {
+    window.location.replace("/manager");
+}
+function setLabelsToMissions() {
+    var table = document.getElementsByName("table")[0];
+    
+    var element = document.getElementsByName("type_display")[0];
+	var newElement = '<label name = "type_display">Missions</label>';
+	element.insertAdjacentHTML('afterend', newElement);
+    element.remove();
+    
+    
+	newElement = '<table name = table align = "center"><tr><th>Mission ID</th><th>Completion Status</th><th>Equipment</th></tr>';
+    
+    missions = {{missions|tojson}};
+    var index = -1;
+    for(i = 0; i < missions.length; i++) {
+        newElement += 
+        "<tr><td><input type='text' name=" + ++index + " onchange='updateMission(" + i + "," + index + ")' value=" + 
+        missions[i][0] + "></td>" +
+        "<td><input type='text' name=" + ++index + " onchange='updateMission(" + i + "," + index + ")' value=" + 
+        missions[i][1] + "></td>" +
+        "<td><input type = 'button' onclick='viewEquipmentForMission(" + missions[i][0] + ")' value = 'View Equipment'></td></tr>";
+    }
+    newElement += "</table>";
+    table.insertAdjacentHTML('afterend', newElement);
+    table.remove();
+}
+function setLabelsToEquipment() {
+    var table = document.getElementsByName("table")[0];
+    
+    var element = document.getElementsByName("type_display")[0];
+	var newElement = '<label name = "type_display">Equipment</label>';
+	element.insertAdjacentHTML('afterend', newElement);
+    element.remove();
+    
+    
+	newElement = '<table name = table align = "center"><tr><th>EquipmentID</th><th>Equipment Name</th><th>MissionID</th>'
+    + '<th><input type = "button" value = "Add" onclick = "addRow()"></th></tr>';
+    
+    equipment = {{equipment|tojson}};
+    var index = -1;
+    for(i = 0; i < equipment.length; i++) {
+        newElement += 
+        "<tr><td><input type='text' name=" + ++index + " onchange='updateEquipment(" + i + "," + index + ")' value=" + 
+        equipment[i][0] + "></td>" + 
+        "<td><input type='text' name=" + ++index + " onchange='updateEquipment(" + i + "," + index + ")' value=" + 
+        equipment[i][1] + "></td>" + 
+        "<td><input type='text' name=" + ++index + " onchange='updateEquipment(" + i + "," + index + ")' value=" + 
+        equipment[i][2] + "></td>" + 
+        "<td><input type = 'button' onclick = 'deleteEquipmentRow(" + i + ")' value = 'Delete'></td></tr>";
+    }
+    newElement += "</table>";
+    table.insertAdjacentHTML('afterend', newElement);
+    table.remove();
+}
+function deleteEquipmentRow(i) {
+    var elementToRemove = document.getElementsByName("table")[0].rows[i+1];
+    elementToRemove.remove();
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/deleteEquipmentRow", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({index:i}));
+}
+function addRow(i) {
+    var table = document.getElementsByName("table")[0];
+    index = (table.rows.length - 1) * 3 - 1;
+    i = table.rows.length - 1;
+    var newElement = 
+        "<tr><td><input type='text' name=" + ++index + " onchange='updateEquipment(" + i + "," + index + ")' value=" + (i + 1) +"></td>" + 
+        "<td><input type='text' name=" + ++index + " onchange='updateEquipment(" + i + "," + index + ")' value='TBD'></td>" + 
+        "<td><input type='text' name=" + ++index + " onchange='updateEquipment(" + i + "," + index + ")' value='-1'></td>" + 
+        "<td><input type = 'button' onclick = 'deleteEquipmentRow(" + i + ")' value = 'Delete'></td></tr>";
+    table.insertAdjacentHTML('beforeend', newElement);
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/addEquipmentRow", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    xmlhttp.send(JSON.stringify({EquipmentID:i + 1, EquipmentName:"TBD", MissionID:-1}));
+}
+function setLabelsToPersonnel() {
+    var table = document.getElementsByName("table")[0];
+    
+    var element = document.getElementsByName("type_display")[0];
+	var newElement = '<label name = "type_display">Personnel</label>';
+	element.insertAdjacentHTML('afterend', newElement);
+    element.remove();
+    
+    
+	newElement = '<table name = table align = "center"><tr><th>UserName</th><th>ResponderID</th><th>MissionID</th><th>Type</th></tr>';
+    
+    personnel = {{personnel|tojson}};
+    var index = -1;
+    for(i = 0; i < personnel.length; i++) {
+        newElement += 
+        "<tr><td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
+        personnel[i][0] + "></td>" +
+        "<td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
+        personnel[i][1] + "></td>" +
+        "<td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
+        personnel[i][2] + "></td>" +
+        "<td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
+        personnel[i][3] + "></td></tr>";
+    }
+    newElement += "</table>";
+    table.insertAdjacentHTML('afterend', newElement);
+    table.remove();
+}
+
+function updatePersonnel(row, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/updatePersonnel", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    var element = document.getElementsByName(index)[0];
+    xmlhttp.send(JSON.stringify({row:row, index:index%4, value:element.value}));
+    //window.location.replace("/equipments");
+}
+</script>
+
+{% endblock %}

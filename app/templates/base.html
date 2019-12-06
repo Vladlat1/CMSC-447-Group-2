@@ -1,0 +1,22 @@
+<html>
+    <head>
+		<link rel="stylesheet" href="/static/styles.css">
+        {% if title %}
+        <title>{{ title }} - Disaster Relief Board</title>
+        {% else %}
+        <title>Disaster Relief Board</title>
+        {% endif %}
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
