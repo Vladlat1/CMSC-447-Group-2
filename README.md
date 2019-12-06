@@ -30,7 +30,8 @@ see [Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part
 * 21-Nov-2019 Completed basic functionality of the responder profile page
 * 23-Nov-2019 Added the map on the operator page in the html
 * 4-Dec-2019 Began working on the manager page
-* 5-Dec-2019 Completed the basic functionality for everything
+* 5-Dec-2019 Completed the basic functionality for nearly everything
+* 6-Dec-2019 Added the Tags page and functionality for editing case tags
 
 ----
 ## Authors
