@@ -9,10 +9,13 @@ see [Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part
 
 ----
 ## Instructions
-1. Download and extract the zip file.
+1. Download Files/Unzip
 2. Open CMD and navigate into the folder in which the folder was saved.
-3. Type "Flask run" to start the server.
-4. Open an internet browser and type "http://localhost:5000/" to open the page.
+3. Install Python if not already
+4. Install Flask
+5. Install Dotenv
+6. Type "Flask run" to start the server.
+7. Open an internet browser and type "http://localhost:5000/" to open the page.
 
 ----
 ## Reference Material
@@ -20,7 +23,7 @@ see [Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part
 
 * Most of the python code, database queries, and navigation information is located in "routes.py" (within the app folder)
 * The "templates" folder contains the .html files associated with each page. There are various pages depending on the role of the account user.
-* The "operator.html" file has a map embedded with Javascript within the html.
+* The static folder contains the css
 
 ----
 ## changelog
