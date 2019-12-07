@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body id="grad">
+<h1 id = "header">
+	Disaster Relief
+</h1>
+<div id = "log">
+    <h1>Sign In</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+			<input id = "login_field" type="text" name="username" placeholder="Username">
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+			<input id = "login_field" type="password" name="password" placeholder="Password">
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>			
+		<input id = "check_box" type="checkbox" name="remember_me">
+			{{ form.remember_me.label }}</p>
+        <p>
+		<input id = "buttons" type="submit" name="submit" value="Sign In">
+		<input id = "buttons" type="submit" name="new_user" value="New User">
+		</p>
+    </form>
+	</div>
+</body>
+{% endblock %}

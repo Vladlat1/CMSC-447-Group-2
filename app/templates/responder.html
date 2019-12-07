@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id = 'responder'>
+	<div>
+        <label>Navigate:</label>
+        <a href="/login" id = "hypelink">Login</a>
+        <a href="/responder_profile" id = "hypelink">Profile</a>
+	</div>
+
+<label>Cases</label>
+<table align = 'center'>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+    </tr>
+    {% for desc in description %}
+    <tr>
+        <td>
+		    <form action="" method="post" novalidate>
+				<p><input type="submit" name="entry" value="{{ desc[1] }}"></p>		
+			</form>
+        </td>
+        <td>
+            {{desc[2]}}
+        </td>
+    </tr>
+	{% endfor %}
+</table>
+<div></div>
+
+<label>Tags</label>
+<table align = 'center'>
+	<tr>
+		<th>Tags</th>
+		<th>Values</th>
+	</tr>
+    <tr>
+        <td>Animal</td><td>{{tags[0]}}</td>
+	</tr><tr>
+		<td>Fire</td><td>{{tags[1]}}</td>
+	</tr><tr>
+        <td>Flood</td><td>{{tags[2]}}</td>
+	</tr><tr>
+       <td>Medical</td><td>{{tags[3]}}</td>
+	</tr><tr>
+        <td>Electrical</td><td>{{tags[4]}}</td>
+	</tr><tr>
+        <td>Other</td><td>{{tags[5]}}</td>
+	</tr>
+</table>
+</div>
+{% endblock %}

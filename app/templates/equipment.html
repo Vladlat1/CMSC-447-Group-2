@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+<div id = 'equipment' data-url="/equipments" }}>
+<div>
+        <label>Navigate:</label>
+        <a href="/login" id = "hypelink">Login</a>
+        <a href="/manager" id = "hypelink">Manager</a>
+	</div>
+<label>Equipment For Mission {{missionID}}</label>
+<table align='center'>
+    <tr>
+        <th>Equipment ID</th>
+        <th>Name</th>
+    </tr>
+    {% for desc in equipment %}
+    {% set loop1 = loop.index %}
+		<tr>
+			{% for val in desc %}
+				<td>{{val}}</td>
+			{% endfor %}
+		</tr>
+	{% endfor %}
+</table>
+</div>
+{% endblock %}

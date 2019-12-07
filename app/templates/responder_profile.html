@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id = "profile">
+	<br>
+	<div>
+        <label>Navigate:</label>
+        <a href="/login" id = "hypelink">Login</a>
+        <a href="/responder" id = "hypelink">Dashboard</a>
+	</div>
+
+    <h1>Hi, {{ user_variables.username }}!</h1>
+		<p>
+		<label class="switch">
+			<input type="checkbox" name="animal">
+			<span class="slider round"></span>
+			<span class="checkbox_label">Animal</span>
+		</label>
+		</p>
+		<p>
+		<label class="switch">
+			<input type="checkbox" name="fire">
+			<span class="slider round"></span>
+			<span class="checkbox_label">Fire</span>
+		</label>
+		</p>
+		<p>
+		<label class="switch">
+			<input type="checkbox" name="flood">
+			<span class="slider round"></span>
+			<span class="checkbox_label">Flood</span>
+		</label>
+		</p>
+		<p>
+		<label class="switch">
+			<input type="checkbox" name="medical">
+			<span class="slider round"></span>
+			<span class="checkbox_label">Medical</span>
+		</label>
+		</p>
+		<p>
+		<label class="switch">
+			<input type="checkbox" name="electrical">
+			<span class="slider round"></span>
+			<span class="checkbox_label">Electrical</span>
+		</label>
+		</p>
+		<p>
+			<input id = "login_field" type="text" name="other" placeholder="Other" value = {{checkedValues[5]}}>
+        </p>
+		<p><input onclick="getValues()" id = "buttons" type="button"value="Update"></p>
+</div>
+	
+	<script type="text/javascript">
+		var others = {{ checkedValues|tojson }};
+		console.log(others);
+		document.getElementsByName("animal")[0].checked = others[0];
+		document.getElementsByName("fire")[0].checked = others[1];
+		document.getElementsByName("flood")[0].checked = others[2];
+		document.getElementsByName("medical")[0].checked = others[3];
+		document.getElementsByName("electrical")[0].checked = others[4];
+		document.getElementsByName("other")[0].value = others[5];
+	
+	
+	function getValues() {
+		var jsonArray = {"animal" : document.getElementsByName("animal")[0].checked,
+			"fire" : document.getElementsByName("fire")[0].checked,
+			"flood" : document.getElementsByName("flood")[0].checked,
+			"medical" : document.getElementsByName("medical")[0].checked,
+			"electrical" : document.getElementsByName("electrical")[0].checked,
+			"other" : document.getElementsByName("other")[0].value};
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("POST", "/updateResponderValues", true);
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send(JSON.stringify(jsonArray));
+	}
+	</script>
+{% endblock %}

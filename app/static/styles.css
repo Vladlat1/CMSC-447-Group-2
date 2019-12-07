@@ -1,0 +1,178 @@
+body {
+	background-image: linear-gradient(to bottom right, blue, orange);
+}
+h1 {
+	color: white;
+}
+p {
+	color: white;
+	padding-top: px;
+}
+ul {
+	color: red;
+}
+table {
+	border-collapse: collapse;
+	font-size: 20px;
+}
+th {
+	border: 1px solid #ddd;
+	background-color: #4CAF50;
+	color: white;
+}
+td {
+	border: none;
+} 
+label {
+	color: white;
+	font-size: 20px;
+}
+a {
+	color: white;
+	font-size: 20px;
+}
+.checkbox_label {
+	color: white;
+	font-size: 20px;
+	display: inline-block;
+	text-indent: 75px;
+}
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	vertical-align: bottom;
+	margin-right: 190px;
+}
+
+.switch input { 
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	vertical-align:middle;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider {
+	background-color: #21f37e;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #21f37e;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:nth-child(odd){background-color: #ffffff;}
+
+#map {
+	float:right;
+	width:50%;
+}
+#left {
+	float:left;
+	width:50%;
+}
+#grad {
+  	text-align: center;
+}
+#log {
+	background-color: blue;
+	border: 3px solid black;
+	width: 300px;
+	height: 500px;
+	margin: auto;
+	font-size: 200%;
+}
+#login_field { 
+	height: 30px;
+	text-align: center;
+	font-size: 20px;
+}
+#buttons {
+	height: 50px;
+	width: 100px;
+	font-size: 15px;
+}
+#check_box {
+	width: 30px;
+	height: 30px;
+	vertical-align: bottom;
+	margin: 20px 0px 0px 0px;
+}
+::placeholder {
+	font-size: 15px;
+	text-align: center;
+}
+#header {
+	font-size: 500%;
+}
+#hypelink {
+	color: white;
+	font-size: 20px;
+}
+#profile {
+	background-color: blue;
+	border: 3px solid black;
+	width: 400px;
+	margin: auto;
+	text-align: center;
+}
+#responder {
+	background-color: blue;
+	border: 3px solid black;
+	width: 400px;
+	margin: auto;
+	text-align: center;
+}
+#mission {
+	background-color: blue;
+	border: 3px solid black;
+	width: 1000px;
+	margin: auto;
+	text-align: center;
+}
+#equipment {
+	background-color: blue;
+	border: 3px solid black;
+	width: 300px;
+	margin: auto;
+	text-align: center;
+}
