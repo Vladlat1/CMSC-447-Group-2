@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id = 'responder'>
+<div id='responder'> 
 	<div>
         <label>Navigate:</label>
         <a href="/login" id = "hypelink">Login</a>
@@ -48,6 +48,24 @@
 	</tr><tr>
         <td>Other</td><td>{{tags[5]}}</td>
 	</tr>
+</table>
+
+<label>Equipment</label>
+<table align = 'center'>
+	<tr>
+		<th>ID</th>
+		<th>Name</th>
+	</tr>
+    {% for equip in equipment %}
+    <tr>
+        <td>
+            {{equip[0]}}
+        </td>
+        <td>
+            {{equip[1]}}
+        </td>
+    </tr>
+	{% endfor %}
 </table>
 </div>
 {% endblock %}

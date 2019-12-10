@@ -112,8 +112,20 @@ def responder():
     cur.execute(query, [id])
     fetch = cur.fetchall()
     description = fetch
+    
+    query = "SELECT MissionID FROM Personnel WHERE ResponderID = ?"
+    cur = conn.cursor()
+    cur.execute(query, [id])
+    fetch = cur.fetchone()
+    missionID = fetch[0]
+    print(missionID)
         
     tags = [0,0,0,0,0,"",0]
+    
+    query = "SELECT EquipmentID, EquipmentName FROM Equipment WHERE Equipment.MissionID = ?"
+    cur.execute(query, [missionID])
+    fetch = cur.fetchall()
+    equipment = fetch
     
     if request.method == "POST":
         for desc in description:

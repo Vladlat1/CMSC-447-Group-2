@@ -63,7 +63,7 @@
 	var locations = {{ locations|tojson }};
   // The first parameter are the coordinates of the center of the map
   // The second parameter is the zoom level
-	var map = L.map('map').setView([39.25359, -76.71279], 18);
+	var map = L.map('map').setView([39.25359, -76.71279], 12);
 	for (i = 0; i < locations.length; i+=8) {
 		console.log("[" + locations[i] + locations[i+1] + "]");
 		L.marker([locations[i], locations[i+1]]).addTo(map)
