@@ -179,14 +179,15 @@ function setLabelsToPersonnel() {
     var index = -1;
     for(i = 0; i < personnel.length; i++) {
         newElement += 
-        "<tr><td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
+        "<tr name=row" + i + "><td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
         personnel[i][0] + "></td>" +
         "<td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
         personnel[i][1] + "></td>" +
         "<td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
         personnel[i][2] + "></td>" +
         "<td><input type='text' name=" + ++index + " onchange='updatePersonnel(" + i + "," + index + ")' value=" + 
-        personnel[i][3] + "></td></tr>";
+        personnel[i][3] + "></td>"
+        + "<td><input type='button' onclick='deletePerson(" + personnel[i][1] + ", " + i + ")' value=Remove></td></tr>";
     }
     newElement += "</table>";
     table.insertAdjacentHTML('afterend', newElement);
@@ -199,6 +200,17 @@ function updatePersonnel(row, index) {
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     var element = document.getElementsByName(index)[0];
     xmlhttp.send(JSON.stringify({row:row, index:index%4, value:element.value}));
+    //window.location.replace("/equipments");
+}
+
+function deletePerson(responderID, index) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "/removePerson", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
+    var element = document.getElementsByName(index)[0];
+    var elementToRemove = document.getElementsByName("row" + index)[0];
+    elementToRemove.remove();
+    xmlhttp.send(JSON.stringify({responderID:responderID}));
     //window.location.replace("/equipments");
 }
 </script>

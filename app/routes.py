@@ -43,9 +43,14 @@ def login():
             cur = conn.cursor()
             cur.execute('SELECT ResponderID FROM Personnel ORDER BY ResponderID DESC LIMIT 1')
             id = int(cur.fetchone()[0]) + 1
+            type = 'responder'
             cur = conn.cursor()
             cur.execute('INSERT INTO Personnel(Username, Password, ResponderID, MissionID, Type) VALUES (?,?,?,?,?)', [username, password, id, 0,'responder']) 
             conn.commit()
+            cur.execute('INSERT INTO Skills(Animal, Fire, Flood, Medical, Electrical, Other, ResponderID) VALUES (?,?,?,?,?,?,?)', [0, 0, 0, 0, 0, '', id])
+            conn.commit()
+            user_variables["username"] = username
+            return redirect(url_for('responder_profile'))
         
         elif form.submit.data:
             cur = conn.cursor()
@@ -137,7 +142,7 @@ def responder():
     
     closeDatabaseConnection(conn)
 
-    return render_template('responder.html', title='Responder', form=form, description=description, tags=tags)
+    return render_template('responder.html', title='Responder', form=form, description=description, tags=tags, equipment=equipment)
     
     
 index = -1
@@ -382,6 +387,16 @@ def updatePersonnel():
     
 tags = []
 caseID = 0
+
+@app.route('/removePerson', methods=['POST'])
+def removePerson():
+    responderID = request.json['responderID']
+    conn = create_connection(database)   
+    cur = conn.cursor()
+    cur.execute('DELETE FROM Personnel WHERE ResponderID = ?', [responderID])
+    conn.commit()
+    closeDatabaseConnection(conn)
+    return redirect(url_for('manager'))
 
 @app.route('/viewTags', methods=['POST'])
 def viewTags():
