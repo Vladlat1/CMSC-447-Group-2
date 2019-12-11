@@ -200,7 +200,7 @@ def events():
             return redirect(url_for('events'))
             
         elif form.new_event.data:
-            cur.execute('INSERT INTO Cases (LocX, LocY, Time) VALUES (?,?,?)', [float(x), float(y), time.strftime("%H:%M")])
+            cur.execute('INSERT INTO Cases (LocX, LocY, Time, MissionID) VALUES (?,?,?,?)', [float(x), float(y), time.strftime("%H:%M"), -1])
             conn.commit()
             cur.execute('INSERT INTO Tags (Animal, Fire, Flood, Medical, Electrical, Other) VALUES (?,?,?,?,?,?)', [animal == True if 1 else 0,\
             fire == True if 1 else 0, flood == True if 1 else 0, medical == True if 1 else 0, electrical == True if 1 else 0, other])
