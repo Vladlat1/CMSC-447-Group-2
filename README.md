@@ -35,6 +35,8 @@ see [Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part
 * 4-Dec-2019 Began working on the manager page
 * 5-Dec-2019 Completed the basic functionality for nearly everything
 * 6-Dec-2019 Added the Tags page and functionality for editing case tags
+* 10-Dec-2019 Fixed a few small bugs
+* 11-Dec-2019 Small enhancements when adding new cases
 
 ----
 ## Authors
